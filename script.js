@@ -9,6 +9,8 @@ const removeAll_button = document.querySelector(".remove-all")
 let todoText;
 let editFlag = false;
 let editElement;
+let firebaseFlag = false;
+let updateIDFirebase;
 
 todoInput_input.addEventListener("input", (e) => {
     todoText = e.currentTarget.value;
@@ -20,6 +22,13 @@ todo_form.addEventListener("submit", addTodoItem);
 //     e.preventDefault();
 //     addTodoItem();
 // })
+
+function addEventListenersToEditDelete() {
+    let newEditTodoId = todos_ul.lastChild.lastChild.firstChild.nextSibling.id;
+    let newDeleteTodoId = todos_ul.lastChild.lastChild.lastChild.previousSibling.id;
+    document.getElementById(newEditTodoId).addEventListener("click", editTodo);
+    document.getElementById(newDeleteTodoId).addEventListener("click", deleteTodo);
+} 
 
 function createNewNode() {
     let newElement = document.createElement("li");
@@ -42,26 +51,39 @@ function addTodoItem(e) {
     if (!editFlag) {
         if (todoText !== null && todoText !== undefined && todoText !== "") {
             let newElement = createNewNode();
-            todos_ul.appendChild(newElement);
+            // todos_ul.appendChild(newElement);
+
+            // firebase save
+            db.collection("todos").add({
+                title: todoText
+            })
+            // firebase save ends
+
             todoInput_input.value = "";
             todoText = "";
         }
         else {
             alert("Please Enter a Valid Todo");
         }
-        let newEditTodoId = todos_ul.lastChild.lastChild.firstChild.nextSibling.id;
-        let newDeleteTodoId = todos_ul.lastChild.lastChild.lastChild.previousSibling.id;
-        document.getElementById(newEditTodoId).addEventListener("click", editTodo);
-        document.getElementById(newDeleteTodoId).addEventListener("click", deleteTodo);
+        // addEventListenersToEditDelete();
+
     }
     else {
         editElement.innerHTML = todoText;
         editFlag = false;
+
+        db.collection("todos").doc(updateIDFirebase).update({
+            title: todoText
+        })
+
         setDefaults();
     }
 }
 
 function editTodo(e) {
+
+    updateIDFirebase = e.currentTarget.parentElement.parentElement.getAttribute("data-id");
+    
     editElement = e.currentTarget.parentElement.previousElementSibling;
     const currentTodoContent = editElement.innerHTML;
     todoInput_input.value = currentTodoContent;
@@ -70,6 +92,8 @@ function editTodo(e) {
 }
 
 function deleteTodo(e) {
+    let id = e.currentTarget.parentElement.parentElement.getAttribute("data-id");
+    db.collection("todos").doc(id).delete();
     todos_ul.removeChild(e.currentTarget.parentElement.parentElement);
 }
 
@@ -80,6 +104,37 @@ function setDefaults() {
 
 removeAll_button.addEventListener("click", function(){
     while (todos_ul.childElementCount !== 0) {
+        let id = todos_ul.firstElementChild.getAttribute("data-id");
+        db.collection("todos").doc(id).delete();
         todos_ul.removeChild(todos_ul.firstElementChild);
     }
 })
+
+
+// firebase starts
+
+function renderList(doc) {
+    todoText = doc.data().title;
+    let newElement = createNewNode();
+    newElement.setAttribute("data-id", doc.id);
+    todos_ul.append(newElement);
+    addEventListenersToEditDelete();
+}
+
+db.collection("todos").orderBy("title").onSnapshot(snapshot => {
+    let changes = snapshot.docChanges();
+    changes.forEach(change => {
+        if (change.type == "added") {
+            renderList(change.doc);
+        }
+        else if (change.type == "removed") {
+            // console.log("removed");
+        }
+        else if (change.type == "modified") {
+            // console.log("modified");
+        }
+    });
+})
+
+
+// firebase ends

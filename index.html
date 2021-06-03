@@ -10,6 +10,12 @@
    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="style.css">
 
+    <!-- firebase starts -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script>
+    <!-- firebase ends -->
+
 </head>
 <body>
     
@@ -55,6 +61,32 @@
     <!-- remove all button ends -->
 
     <!-- javascript -->
+
+    <!-- firebase starts -->
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+        apiKey: "AIzaSyBkacm8mT49wl-1DJIIDBsfLUKY6yZoGqA",
+        authDomain: "todoapp-a1ef8.firebaseapp.com",
+        projectId: "todoapp-a1ef8",
+        storageBucket: "todoapp-a1ef8.appspot.com",
+        messagingSenderId: "1099216670235",
+        appId: "1:1099216670235:web:c20a5830fa45a6f39c32be"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // custom script
+        const db = firebase.firestore();
+
+    </script>
+
+    <!-- firebase ends -->
+
     <script src="script.js"></script>
 </body>
 </html>
