@@ -132,6 +132,88 @@ i {
     border: 1px solid #E44232;
 }
 
+.modal-container-login {
+    visibility: hidden;
+    z-index: -1;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+}
+.modal-container-signup {
+    visibility: hidden;
+    z-index: -1;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+}
+.modal-login, .modal-signup {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 2rem;
+}
+.show-login-modal, .show-signup-modal {
+    visibility: visible;
+    z-index: +1;
+}
+.modal-content {
+    color: #E44232;
+    letter-spacing: 2px;
+    margin-bottom: 2rem;
+}
+.modal-login form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    place-items: center;
+}
+.modal-login form input {
+    font-size: 1.1rem;
+}
+.modal-login button {
+    width: 100px;
+    background-color: #E44232;
+    color: white;
+    letter-spacing: 2px;
+    border: none;
+    padding: 0.4rem 0.4rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.modal-login button:hover {
+    background-color: white;
+    color: #E44232;
+    border: solid 2px #E44232;
+    transition: all 0.5s ease-in;
+}
+.modal-signup form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    place-items: center;
+}
+.modal-signup form input {
+    font-size: 1.1rem;
+}
+.modal-signup button {
+    width: 100px;
+    background-color: #E44232;
+    color: white;
+    letter-spacing: 2px;
+    border: none;
+    padding: 0.4rem 0.4rem;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.modal-signup button:hover {
+    background-color: white;
+    color: #E44232;
+    border: solid 2px #E44232;
+    transition: all 0.5s ease-in;
+}
+
 @media screen and (min-width : 800px) {
     #add-todo {
         width: 50%;

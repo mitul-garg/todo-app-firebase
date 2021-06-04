@@ -14,6 +14,7 @@
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-auth.js"></script>
     <!-- firebase ends -->
 
 </head>
@@ -23,14 +24,47 @@
     <nav>
         <h1>TODO</h1>
         <div class="nav-links">
-            <a href="">Login</a>
-            <a href="">SignUp</a>
+            <a href="" class="logged-in" id="logout">Logout</a>
+            <a href="" class="logged-out open-modal-login">Login</a>
+            <a href="" class="logged-out open-modal-signup">SignUp</a>
         </div>
     </nav>
     <!-- navbar ends -->
-    
+    <h3 class="logged-in" id="user-email" style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;"></h3>
+    <!-- login modal starts -->
+    <div class="modal-container-login">
+        <div class="modal-login">
+            <h1 class="modal-content">Log In</h1>
+            <form action="" id="login-form">
+                <label>Email Address</label>
+                <input type="email" id="login-email" required>
+                <label>Password</label>
+                <input type="password" id="login-password" required>
+                <button>Log In</button>
+                <p class="error"></p>
+            </form>
+        </div>
+    </div>
+    <!-- login modal ends -->
+
+    <!-- signup modal starts -->
+    <div class="modal-container-signup">
+        <div class="modal-signup">
+            <h1 class="modal-content">Sign Up</h1>
+            <form action="" id="signup-form">
+                <label>Email Address</label>
+                <input type="email" id="signup-email" required>
+                <label>Password</label>
+                <input type="password" id="signup-password" required>
+                <button>Sign Up</button>
+                <p class="error"></p>
+            </form>
+        </div>
+    </div>
+    <!-- signup modal ends -->
+
     <!-- form to add todos -->
-    <form id="add-todo">
+    <form id="add-todo" class="logged-in">
         <input type="text" placeholder="Add Task" class="todo-input">
         <button class="add-task">Add Task</button>
     </form>
@@ -55,7 +89,7 @@
     <!-- todos end -->
 
     <!-- remove all button -->
-    <button class="remove-all">
+    <button class="remove-all logged-in">
         Remove All
     </button>
     <!-- remove all button ends -->
@@ -82,11 +116,15 @@
 
         // custom script
         const db = firebase.firestore();
+        const auth = firebase.auth();
 
+        console.clear();
+        
     </script>
 
     <!-- firebase ends -->
 
     <script src="script.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
